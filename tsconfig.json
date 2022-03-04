@@ -1,11 +1,9 @@
 {
     "compilerOptions": {
+        "lib": ["es2018"],
         "target": "ES2018",
         "module": "commonjs",
-        "lib": ["es2018"],
         "moduleResolution": "node",
-        "outDir": "dist",
-        "typeRoots": ["./node_modules/@types"],
         "resolveJsonModule": true,
         "strict": true,
         "declaration": true,
@@ -23,9 +21,10 @@
         "strictPropertyInitialization": false,
         "noEmit": true,
         "esModuleInterop": true,
-        "rootDir": ".",
-        "baseUrl": "."
+        "baseUrl": "./src",
+        "outDir": "./dist",
+        "typeRoots": ["./node_modules/@types"]
     },
-    "exclude": ["dist", "node_modules"],
-    "include": ["./src/**/*"]
+    "exclude": ["node_modules"],
+    "include": ["./src/*"]
 }
