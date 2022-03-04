@@ -1,5 +1,9 @@
-interface CoreOptions {}
+interface Optionals {
+    outDir?: string;
+}
 
-export default class BundlerCore {
+export interface CoreOptions extends Optionals {}
+
+export default class Bundler {
     constructor(private coreOpts: CoreOptions) {}
 }
