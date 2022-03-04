@@ -7,23 +7,26 @@ export class Target {
     static NODE_14 = 'node14';
 }
 
-export default class Bundler {
-    public readonly outDir: string;
+export interface IBundler {
+    buildAndArchive(zipName?: string): Promise<void>;
+}
+
+export default class Bundler implements IBundler {
+    private readonly outDir: string;
 
     constructor(private bundleOpts: CoreOptions) {
         this.outDir = bundleOpts.outDir || 'bundle.out';
     }
 
-    private outFileDir(zipName?: string): string {
-        this.deleteAndCreate(this.outDir);
-        const zipfile = zipName || 'archive.zip';
-        return path.join(this.outDir, zipfile);
+    private createOutDir(outDir: string): void {
+        const exist = fse.existsSync(outDir);
+        if (!exist) fse.mkdirSync(outDir);
     }
 
-    private deleteAndCreate(outDir: string): void {
-        const exist = fse.existsSync(outDir);
-        if (exist) fse.removeSync(outDir);
-        fse.mkdirSync(outDir);
+    private outFileDir(zipName?: string): string {
+        this.createOutDir(this.outDir);
+        const zipfile = zipName || 'archive.zip';
+        return path.join(this.outDir, zipfile);
     }
 
     public async buildAndArchive(zipName?: string): Promise<void> {
