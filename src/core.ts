@@ -1,6 +1,6 @@
-import path from 'path';
 import * as fs from 'fs';
-import JSZip from 'jszip';
+import * as path from 'path';
+import * as JSZip from 'jszip';
 import * as esbuild from 'esbuild';
 
 interface Optionals {
