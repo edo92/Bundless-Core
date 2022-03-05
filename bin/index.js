@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const Bundler = require('../dist');
+const { Bundler } = require('../dist/index.js');
 
 const script = async () => {
     const bundler = new Bundler({
