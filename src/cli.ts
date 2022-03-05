@@ -13,7 +13,7 @@ export class Cli {
     }
 
     private register(): void {
-        this.commander.addOption(new Option('-e, --entry [string...]', 'entry points'));
+        this.commander.addOption(new Option('-e, --entryPoints [string...]', 'entry points'));
         this.commander.addOption(new Option('-n, --name <string>', 'archive zip fie name'));
         this.commander.addOption(new Option('-o, --outDir <string>', 'out directory'));
         this.commander.addOption(new Option('-m, --minify <boolean>', 'minify module'));
