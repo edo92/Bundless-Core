@@ -11,7 +11,7 @@ export interface IBundler {
     buildAndArchive(zipName?: string): Promise<void>;
 }
 
-export default class Bundler implements IBundler {
+export class Bundler implements IBundler {
     private readonly outDir: string;
 
     constructor(private bundleOpts: CoreOptions) {
