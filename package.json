@@ -1,5 +1,6 @@
 {
     "name": "bundless",
+    "author": "Eduard Jacobs",
     "version": "1.0.0",
     "main": "dist/index.ts",
     "scripts": {
@@ -26,5 +27,7 @@
         "bundle lambda",
         "lambda bundler"
     ],
-    "author": "Eduard Jacobs"
+    "bin": {
+        "bundless": "./bin/index.js"
+    }
 }
