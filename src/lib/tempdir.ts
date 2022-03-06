@@ -6,6 +6,7 @@ export class Tempdir {
 
     constructor(private entry: string) {
         if (!fs.existsSync(entry)) {
+            console.log("------",entry)
             throw new Error('Directory does not exist');
         }
     }
