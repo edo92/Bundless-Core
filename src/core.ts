@@ -15,7 +15,8 @@ interface Optionals {
     external?: string[];
     logLevel?: esbuild.LogLevel;
     platform?: 'node';
-    target?: 'node12' | 'node14';
+    target?: string[];
+    splitting: boolean;
 }
 
 export interface CoreOptions extends Optionals {
@@ -30,7 +31,8 @@ class Defaults {
     static bundle = true;
     static write = false;
     static minify = true;
-    static target = 'node14';
+    static splitting = true;
+    static target = ['esnext'];
     static outDir = 'bundless';
     static outFile = 'index.js';
 }
@@ -93,6 +95,7 @@ export default class BundlerCore extends Core {
             platform: this.coreOpts.platform || 'node',
             logLevel: this.coreOpts.logLevel || 'silent',
 
+            format: 'esm',
             write: false,
             absWorkingDir: process.cwd(),
             external: this.coreOpts.external,
@@ -100,9 +103,9 @@ export default class BundlerCore extends Core {
 
             minify: this.coreOpts.bundle || Defaults.minify,
             bundle: this.coreOpts.bundle || Defaults.bundle,
-            target: this.coreOpts.target || Defaults.target,
             outdir: this.coreOpts.outDir || Defaults.outDir,
-
+            target: this.coreOpts.target || Defaults.target,
+            splitting: this.coreOpts.splitting || Defaults.splitting,
             entryPoints: this.coreOpts.entryPoints.map((entry) => path.resolve(entry)),
         });
 
