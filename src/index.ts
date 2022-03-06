@@ -1,5 +1,5 @@
 import * as path from 'path';
-import * as fse from 'fs-extra';
+import * as fs from 'fs-extra';
 import BundlerCore, { CoreOptions } from './core';
 
 export class Target {
@@ -19,8 +19,8 @@ export class Bundler implements IBundler {
     }
 
     private createOutDir(outDir: string): void {
-        const exist = fse.existsSync(outDir);
-        if (!exist) fse.mkdirSync(outDir);
+        const exist = fs.existsSync(outDir);
+        if (!exist) fs.mkdirSync(outDir);
     }
 
     private outFileDir(zipName?: string): string {
@@ -31,8 +31,10 @@ export class Bundler implements IBundler {
 
     public async buildAndArchive(zipName?: string): Promise<void> {
         const bundler = new BundlerCore(this.bundleOpts);
+
         const res = await bundler.build();
         const zip = await bundler.archive(res);
         bundler.writeFile(this.outFileDir(zipName), zip);
+        fs.removeSync(bundler.tempdir);
     }
 }
