@@ -26,13 +26,13 @@ export class Bundler implements IBundler {
     private outFileDir(zipName?: string): string {
         this.createOutDir(this.outDir);
         const zipfile = zipName || 'archive.zip';
-        return path.join(this.outDir, zipfile);
+        return path.join(this.outDir, `${zipfile}.zip`);
     }
 
     public async buildAndArchive(zipName?: string): Promise<void> {
         const bundler = new BundlerCore(this.bundleOpts);
         const res = await bundler.build();
-        const zip = await bundler.archive(res.bundle);
+        const zip = await bundler.archive(res);
         bundler.writeFile(this.outFileDir(zipName), zip);
     }
 }
