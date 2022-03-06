@@ -1,8 +1,7 @@
-import * as path from 'path';
-import { Tempdir } from './lib/tempdir';
-import Builder, { BuilderOptions } from './lib/build';
 import Archive from './lib/archive';
 import Installer from './lib/installer';
+import { Tempdir } from './lib/tempdir';
+import Builder, { BuilderOptions } from './lib/build';
 
 interface BundlerOpts extends BuilderOptions {
     name: string;
@@ -45,9 +44,3 @@ export class Bundler {
         this.tempdir.delete();
     }
 }
-
-new Bundler({
-    name: 'mymodulename',
-    outdir: 'bundle.out',
-    entry: path.resolve('test/mock/module'),
-}).bundle();
