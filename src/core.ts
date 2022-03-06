@@ -1,8 +1,8 @@
-import * as fs from 'fs';
+import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as JSZip from 'jszip';
 import * as esbuild from 'esbuild';
-
+import * as cp from 'child_process';
 interface Optionals {
     file?: string;
     name?: string;
@@ -32,7 +32,7 @@ class Defaults {
     static write = false;
     static minify = true;
     static splitting = true;
-    static target = ['esnext'];
+    static target = ['node14'];
     static outDir = 'bundless';
     static outFile = 'index.js';
 }
@@ -62,6 +62,8 @@ class Core {
 }
 
 export default class BundlerCore extends Core {
+    public tempdir: string;
+
     constructor(private coreOpts: CoreOptions) {
         super(coreOpts);
     }
@@ -91,22 +93,27 @@ export default class BundlerCore extends Core {
      * @returns {string}
      */
     public async build(): Promise<IBuild> {
+        const entryPoints = this.coreOpts.entryPoints.map((entry) => {
+            this.tempdir = path.resolve('tempdir');
+            fs.copySync(entry, this.tempdir);
+            cp.execSync(`npm install --prefix ${this.tempdir}`);
+            return this.tempdir;
+        });
+
         const res = await esbuild.build({
             platform: this.coreOpts.platform || 'node',
             logLevel: this.coreOpts.logLevel || 'silent',
 
-            format: 'esm',
+            format: 'cjs',
             write: false,
             absWorkingDir: process.cwd(),
             external: this.coreOpts.external,
             metafile: this.coreOpts.metafile,
-
             minify: this.coreOpts.bundle || Defaults.minify,
             bundle: this.coreOpts.bundle || Defaults.bundle,
             outdir: this.coreOpts.outDir || Defaults.outDir,
             target: this.coreOpts.target || Defaults.target,
-            splitting: this.coreOpts.splitting || Defaults.splitting,
-            entryPoints: this.coreOpts.entryPoints.map((entry) => path.resolve(entry)),
+            entryPoints: entryPoints,
         });
 
         return { bundle: res.outputFiles[0].text };
