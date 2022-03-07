@@ -1,26 +1,21 @@
 import { Command, Option } from 'commander';
 
-export class Cli {
-    private commander: Command;
-
-    public get options() {
-        return this.commander.parse().opts();
+export class Cli extends Command {
+    public get options(): Record<string, string | string[]> {
+        return this.parse().opts();
     }
 
     constructor() {
-        this.commander = new Command();
+        super();
         this.register();
     }
 
     private register(): void {
-        this.commander.addOption(new Option('-f, --file <string>', 'out file name'));
-        this.commander.addOption(new Option('-o, --outdir <string>', 'out directory'));
-        this.commander.addOption(new Option('-m, --minify <boolean>', 'minify module'));
-        this.commander.addOption(new Option('-e, --entry <string>', 'entry path'));
-        this.commander.addOption(new Option('-n, --name <string>', 'archive zip fie name'));
-
-        this.commander.addOption(
-            new Option('-ex, --external [string...]', 'external modules')
-        );
+        this.addOption(new Option('-e, --entry <string>', 'entry path'));
+        this.addOption(new Option('-f, --file <string>', 'out file name'));
+        this.addOption(new Option('-o, --outdir <string>', 'out directory'));
+        this.addOption(new Option('-m, --minify <boolean>', 'minify module'));
+        this.addOption(new Option('-n, --name <string>', 'archive zip fie name'));
+        this.addOption(new Option('-ex, --external [string...]', 'external modules'));
     }
 }
