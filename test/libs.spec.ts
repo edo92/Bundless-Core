@@ -21,6 +21,7 @@ describe('Lib test', () => {
             const builder = Builder({
                 outdir: outdir,
                 entry: mockModule,
+                external: ['uuid'],
             });
             expect(typeof builder.bundle).toBe('string');
         });
