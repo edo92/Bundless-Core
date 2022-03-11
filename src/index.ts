@@ -2,13 +2,14 @@ import Archive from './lib/archive';
 import { Tempdir } from './lib/tempdir';
 import { Installer } from './lib/installer';
 import Builder, { BuilderOptions } from './lib/build';
+import path from 'path';
 
 interface BundlerOpts extends BuilderOptions {
-    name: string;
+    name?: string;
 }
 
 export interface IBundler {
-    bundle(): Promise<void>;
+    bundle(): void;
 }
 
 export class Bundler implements IBundler {
@@ -36,6 +37,15 @@ export class Bundler implements IBundler {
 
     /**
      *
+     * Archived file absolute path
+     */
+    public get filepath(): string {
+        const outfile = `${this.outfile}.zip`;
+        return path.join(this.outdir, outfile);
+    }
+
+    /**
+     *
      * Bundler instance
      * Init temporary directory control
      */
@@ -48,7 +58,7 @@ export class Bundler implements IBundler {
      *
      * Bundler logic
      */
-    public async bundle(): Promise<void> {
+    public bundle(): void {
         // Install dps if package.json exist
         Installer(this.tempdir.dirpath);
 
@@ -59,7 +69,7 @@ export class Bundler implements IBundler {
         });
 
         // Archive build outdir
-        await Archive({
+        Archive({
             outdir: this.outdir,
             zipFilename: this.outfile,
             content: build.bundle,
