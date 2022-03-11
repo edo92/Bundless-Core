@@ -2,14 +2,17 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import * as cp from 'child_process';
 
-interface InstallerOpts {
-    tempdir: string;
-}
+export class Installer {
+    private cmd: string;
 
-export default function Installer(opts: InstallerOpts) {
-    const pkg = path.join(opts.tempdir, 'package.json');
+    constructor(private dirpath: string) {
+        const platform = process.platform;
+        this.cmd = platform === 'win32' ? 'npm.cmd' : 'npm';
+    }
 
-    if (fs.existsSync(pkg)) {
-        cp.execSync(`npm install --production --prefix ${opts.tempdir}`);
+    public install(): void {
+        cp.spawnSync(this.cmd, ['install --production'], {
+            cwd: this.dirpath,
+        });
     }
 }
