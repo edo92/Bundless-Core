@@ -9,7 +9,7 @@ interface BundlerOpts extends BuilderOptions {
 }
 
 export interface IBundler {
-    bundle(): void;
+    bundle(): Promise<void>;
 }
 
 export class Bundler implements IBundler {
@@ -58,7 +58,7 @@ export class Bundler implements IBundler {
      *
      * Bundler logic
      */
-    public bundle(): void {
+    public async bundle(): Promise<void> {
         // Install dps if package.json exist
         Installer(this.tempdir.dirpath);
 
@@ -69,7 +69,7 @@ export class Bundler implements IBundler {
         });
 
         // Archive build outdir
-        Archive({
+        await Archive({
             outdir: this.outdir,
             zipFilename: this.outfile,
             content: build.bundle,
