@@ -1,7 +1,7 @@
 import { Command, Option } from 'commander';
 
 export class Cli extends Command {
-    public get options(): Record<string, string | string[]> {
+    public get values(): Record<string, string | string[]> {
         return this.parse().opts();
     }
 
