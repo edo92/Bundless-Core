@@ -3,7 +3,7 @@ const { Cli } = require('../dist/cli');
 const { Bundler } = require('../dist/index.js');
 
 (async function () {
-    const { options } = new Cli();
-    const bundler = new Bundler(options);
+    const cli = new Cli();
+    const bundler = new Bundler(cli.values);
     await bundler.bundle();
 })();
