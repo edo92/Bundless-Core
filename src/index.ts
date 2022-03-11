@@ -50,7 +50,7 @@ export class Bundler implements IBundler {
      */
     public async bundle(): Promise<void> {
         // Install dps if package.json exist
-        new Installer(this.tempdir.dirpath).install();
+        Installer(this.tempdir.dirpath);
 
         // Build and return bundle string
         const build = Builder({
