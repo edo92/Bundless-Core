@@ -12,7 +12,7 @@ const bundler = new Bundler({
 bundler.bundle();
 ```
 
--Cli
+- Cli
 ```bash
     npx bundless -e <Entry_Path> -o <Out_dir> -
 ```

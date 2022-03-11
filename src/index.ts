@@ -1,8 +1,8 @@
+import path from 'path';
 import Archive from './lib/archive';
 import { Tempdir } from './lib/tempdir';
 import { Installer } from './lib/installer';
 import Builder, { BuilderOptions } from './lib/build';
-import path from 'path';
 
 interface BundlerOpts extends BuilderOptions {
     name?: string;
