@@ -1,8 +1,8 @@
 {
     "name": "bundless",
-    "author": "Eduard Jacobs",
     "version": "1.0.0",
-    "main": "dist/index.ts",
+    "main": "dist/index.js",
+    "author": "Eduard Jacobs",
     "scripts": {
         "build": "tsc",
         "prepare": "npm run build",
