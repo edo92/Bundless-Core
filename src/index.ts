@@ -5,7 +5,7 @@ import Builder, { BuilderOptions } from './lib/build';
 import path from 'path';
 
 interface BundlerOpts extends BuilderOptions {
-    name: string;
+    name?: string;
 }
 
 export interface IBundler {
