@@ -1,6 +1,6 @@
 import Archive from './lib/archive';
-import Installer from './lib/installer';
 import { Tempdir } from './lib/tempdir';
+import { Installer } from './lib/installer';
 import Builder, { BuilderOptions } from './lib/build';
 
 interface BundlerOpts extends BuilderOptions {
@@ -50,10 +50,10 @@ export class Bundler implements IBundler {
      */
     public async bundle(): Promise<void> {
         // Install dps if package.json exist
-        await Installer({ tempdir: this.tempdir.dirpath });
+        new Installer(this.tempdir.dirpath).install();
 
         // Build and return bundle string
-        const build = await Builder({
+        const build = Builder({
             ...this.opts,
             entry: this.tempdir.dirpath,
         });
