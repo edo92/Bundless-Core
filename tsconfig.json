@@ -1,7 +1,4 @@
 {
-    "ts-node": {
-        "require": ["tsconfig-paths/register"]
-    },
     "compilerOptions": {
         "baseUrl": ".",
         "typeRoots": ["./types/global.d.ts", "./node_modules/@types"],
@@ -20,16 +17,7 @@
         "noImplicitReturns": true,
         "noFallthroughCasesInSwitch": false,
         "strictPropertyInitialization": false,
-        "esModuleInterop": true,
-        "plugins": [
-            {
-                "afterDeclarations": true,
-                "transform": "typescript-transform-paths"
-            }
-        ],
-        "paths": {
-            "@lib/*": ["src/lib/*"]
-        }
+        "esModuleInterop": true
     },
     "exclude": ["node_modules", "dist"],
     "include": ["./src/**/*", "./types/**/*"]
