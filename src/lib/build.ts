@@ -1,13 +1,11 @@
-import * as fs from 'fs-extra';
 import * as esTypes from 'esbuild';
 import { buildSync } from 'esbuild';
 
-export interface IBuild {
+export interface IBundle {
     bundle: string;
 }
 
 export interface BuilderOptions {
-    entry: string;
     outdir?: string;
     bundle?: boolean;
     minify?: boolean;
@@ -28,25 +26,25 @@ class Defaults {
     static logLevel: esTypes.LogLevel = 'silent';
 }
 
-export default function builder(opts: BuilderOptions): IBuild {
-    if (!opts.entry && fs.existsSync(opts.entry)) {
-        throw new Error('Entry directory does not exist');
+export class Builder {
+    constructor(private opts: BuilderOptions) {}
+
+    public build(entry: string): IBundle {
+        const bundle = buildSync({
+            write: false,
+            entryPoints: [entry],
+            absWorkingDir: process.cwd(),
+            external: this.opts.external,
+
+            format: this.opts.format || Defaults.format,
+            target: this.opts.target || Defaults.target,
+            bundle: this.opts.bundle || Defaults.bundle,
+            minify: this.opts.minify || Defaults.minify,
+            outdir: this.opts.outdir || Defaults.outdir,
+
+            platform: this.opts.platform || Defaults.platform,
+            logLevel: this.opts.logLevel || Defaults.logLevel,
+        });
+        return { bundle: bundle.outputFiles[0].text };
     }
-
-    const buildRes = buildSync({
-        write: false,
-        absWorkingDir: process.cwd(),
-        external: opts.external,
-        entryPoints: [opts.entry],
-
-        format: opts.format || Defaults.format,
-        target: opts.target || Defaults.target,
-        bundle: opts.bundle || Defaults.bundle,
-        minify: opts.minify || Defaults.minify,
-        outdir: opts.outdir || Defaults.outdir,
-
-        platform: opts.platform || Defaults.platform,
-        logLevel: opts.logLevel || Defaults.logLevel,
-    });
-    return { bundle: buildRes.outputFiles[0].text };
 }

@@ -1,42 +1,49 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import JSZip from 'jszip';
+import adminZip from 'adm-zip';
 
 interface ArchiveOpts {
     outdir: string;
-    content: string;
     zipFilename: string;
 }
 
-export default async function archive(opts: ArchiveOpts): Promise<void> {
-    const zip = new JSZip();
+interface IArchive {
+    archive(content: string): void;
+}
+export class Archive implements IArchive {
+    private zip: adminZip;
 
-    /**
-     *
-     * Create out file if not exist
-     */
-    const exist = fs.existsSync(opts.outdir);
-    if (!exist) fs.mkdirSync(opts.outdir);
+    private get outFile(): string {
+        return path.join(this.opts.zipFilename, 'index.js');
+    }
 
-    /**
-     *
-     * Add file to zip
-     */
-    const zipOutFile = path.join(opts.zipFilename, 'index.js');
-    zip.file(zipOutFile, opts.content);
+    private get outDir(): string {
+        const { outdir, zipFilename } = this.opts;
+        return path.join(outdir, zipFilename);
+    }
 
-    /**
-     *
-     * Generate content buffer
-     */
-    const contentBuff = await zip.generateAsync({
-        type: 'nodebuffer',
-    });
+    constructor(private opts: ArchiveOpts) {
+        this.zip = new adminZip();
+    }
 
-    /**
-     *
-     * Write content buffer to file
-     */
-    const filepath = path.join(opts.outdir, `${opts.zipFilename}.zip`);
-    fs.promises.writeFile(filepath, contentBuff);
+    public archive(content: string): void {
+        this._addFile(content);
+        this._writeFile();
+        this._removeBase();
+    }
+
+    private _writeFile(): void {
+        this.zip.writeZip(`${this.outDir}.zip`);
+    }
+
+    private _addFile(content: string): void {
+        const buff = Buffer.from(content);
+        this.zip.addFile(this.outFile, buff);
+    }
+
+    private _removeBase(): void {
+        setTimeout(() => {
+            fs.removeSync(this.outDir);
+        }, 500);
+    }
 }

@@ -16,13 +16,12 @@ describe('Bundle', () => {
     });
 
     it('Bundler bundle', async () => {
-        const bundler = await new Bundler({
+        const bundler = new Bundler({
             outdir: outdir,
             entry: mockModule,
             name: archivefile,
         });
-
-        await bundler.bundle();
+        bundler.bundle();
 
         // Check archived zip exist
         const zipPath = path.join(outdir, `${archivefile}.zip`);
@@ -45,7 +44,7 @@ describe('Bundle', () => {
     it('Bundler module run', async () => {
         // Run module file (zip -> index.js)
         const outFileIdx = path.join(outdir, archivefile, 'index.js');
-        const res = await cp.execSync(`node ${outFileIdx}`);
+        const res = cp.execSync(`node ${outFileIdx}`);
 
         // Split output string and split to test
         const result = res.toString().split(' ');
