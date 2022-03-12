@@ -1,9 +1,15 @@
 import * as cp from 'child_process';
 
-export function Installer(dirpath: string) {
-    const cmd = process.platform === 'win32' ? 'npm.cmd' : 'npm';
+export class Installer {
+    protected get command(): string {
+        const platform = process.platform;
+        const isWin = platform === 'win32';
+        return isWin ? 'npm.cmd' : 'npm';
+    }
 
-    cp.spawnSync(cmd, ['install'], {
-        cwd: dirpath,
-    });
+    public install(entryPath: string): void {
+        cp.spawnSync(this.command, ['install'], {
+            cwd: entryPath,
+        });
+    }
 }

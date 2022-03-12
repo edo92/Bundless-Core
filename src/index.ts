@@ -1,15 +1,16 @@
 import path from 'path';
-import Archive from './lib/archive';
+import { Archive } from './lib/archive';
 import { Tempdir } from './lib/tempdir';
 import { Installer } from './lib/installer';
-import Builder, { BuilderOptions } from './lib/build';
+import { Builder, BuilderOptions, IBundle } from './lib/build';
 
 interface BundlerOpts extends BuilderOptions {
     name?: string;
+    entry: string;
 }
 
 export interface IBundler {
-    bundle(): Promise<void>;
+    bundle(): void;
 }
 
 export class Bundler implements IBundler {
@@ -54,28 +55,27 @@ export class Bundler implements IBundler {
         this.tempdir.create(this.outdir).copy();
     }
 
-    /**
-     *
-     * Bundler logic
-     */
-    public async bundle(): Promise<void> {
-        // Install dps if package.json exist
-        Installer(this.tempdir.dirpath);
+    public bundle(): void {
+        this.install();
+        const build = this.build();
+        this.archive(build.bundle);
+        this.tempdir.delete();
+    }
 
-        // Build and return bundle string
-        const build = Builder({
-            ...this.opts,
-            entry: this.tempdir.dirpath,
-        });
+    private install(): void {
+        const installer = new Installer();
+        installer.install(this.tempdir.dirpath);
+    }
 
-        // Archive build outdir
-        await Archive({
+    private build(): IBundle {
+        const builder = new Builder(this.opts);
+        return builder.build(this.tempdir.dirpath);
+    }
+
+    private archive(bundle: string): void {
+        new Archive({
             outdir: this.outdir,
             zipFilename: this.outfile,
-            content: build.bundle,
-        });
-
-        // Delete temporary directory
-        this.tempdir.delete();
+        }).archive(bundle);
     }
 }
