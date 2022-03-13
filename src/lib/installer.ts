@@ -3,11 +3,24 @@ import * as fs from 'fs-extra';
 import * as cp from 'child_process';
 
 export interface IInstaller {
+    /**
+     *
+     * install npm deps. inside intry directory
+     */
     install(): void;
+
+    /**
+     *
+     * remove node_moduels and package-lock.json
+     */
     clean(): void;
 }
 
 export interface InstallerOpts {
+    /**
+     *
+     * entry directory where index and/or package.json
+     */
     entry: string;
 }
 
