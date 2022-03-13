@@ -6,11 +6,12 @@
     "scripts": {
         "build": "tsc",
         "prepare": "npm run build",
-        "test": "jest --config=jest.config.ts",
+        "test": "jest -w 1 --config=jest.config.ts",
         "lint:fix": "eslint '**/*.{js,ts}' --fix",
         "lint:check": "eslint '**/*.{js,ts}' --quiet"
     },
     "devDependencies": {
+        "@types/adm-zip": "^0.4.34",
         "@types/fs-extra": "^9.0.13",
         "@types/jest": "^27.4.1",
         "@types/node": "^17.0.21",
