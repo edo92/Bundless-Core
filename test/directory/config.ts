@@ -26,7 +26,6 @@ export class Mock {
     }
 
     static get entryPath() {
-        console.log('-----', path.join(__dirname, '../', MockConfig.entry));
         return path.join(__dirname, '../', MockConfig.entry);
     }
 
