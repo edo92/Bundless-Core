@@ -70,13 +70,14 @@ describe('Build Module', () => {
             expect(typeof lib).toBe('string');
         });
 
-        it('clean up', () => {
+        it('clean up', (done) => {
             installer.clean();
             fileList().forEach((file) => {
                 expect(fs.existsSync(file)).toBe(false);
             });
             fs.removeSync(Mock.outFile);
             expect(fs.existsSync(Mock.outFile)).toBe(false);
+            done();
         });
     });
 });
