@@ -6,7 +6,7 @@
     "scripts": {
         "build": "tsc",
         "prepare": "npm run build",
-        "test": "jest -w 1 --config=jest.config.ts",
+        "test": "jest --config=jest.config.ts",
         "lint:fix": "eslint '**/*.{js,ts}' --fix",
         "lint:check": "eslint '**/*.{js,ts}' --quiet"
     },
