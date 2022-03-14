@@ -28,6 +28,7 @@ describe('Installer Module', () => {
             const entry = Mock.emptyModule;
             const installer = new Installer({ entry });
             installer.install();
+            // if no package.json, doesnt install -> no modules
             expect(fs.existsSync(Mock.emptyModulePkg)).toBe(false);
             expect(fs.existsSync(Mock.emptyModuleLock)).toBe(false);
         });
@@ -52,7 +53,7 @@ describe('Installer Module', () => {
         });
     });
 
-    describe('Clean Method', () => {
+    describe.only('Clean Method', () => {
         beforeAll(() => {
             method = jest.spyOn(installer, 'clean');
         });
