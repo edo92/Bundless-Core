@@ -1,9 +1,9 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
-
 import { Mock } from './config';
-import Installer, { IInstaller } from '../../src/lib/installer';
+
 import Builder, { IBuilder } from '../../src/lib/build';
+import Installer, { IInstaller } from '../../src/lib/installer';
 
 describe('Build Module', () => {
     let builder: IBuilder;

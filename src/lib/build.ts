@@ -2,7 +2,7 @@ import * as fs from 'fs-extra';
 import * as esTypes from 'esbuild';
 import { buildSync } from 'esbuild';
 
-export interface IBundle {
+export interface IBuild {
     bundle: string;
 }
 
@@ -18,21 +18,21 @@ export interface BuilderOpts {
 }
 
 export interface IBuilder {
-    build(entry: string): IBundle;
+    build(entry: string): IBuild;
 }
 
 class Defaults {
-    static minify: boolean = true;
-    static bundle: boolean = true;
-    static target: string = 'node14';
-    static outdir: string = 'bundle.out';
+    static minify = true;
+    static bundle = true;
+    static target = 'node14';
+    static outdir = 'bundle.out';
     static format: esTypes.Format = 'cjs';
     static platform: esTypes.Platform = 'node';
     static logLevel: esTypes.LogLevel = 'silent';
 }
 
 class Builder implements IBuilder {
-    constructor(private opts?: BuilderOpts) {}
+    constructor(private readonly opts?: BuilderOpts) {}
 
     private validateEntry(path: string) {
         if (!fs.existsSync(path)) {
@@ -40,7 +40,7 @@ class Builder implements IBuilder {
         }
     }
 
-    public build(entry: string): IBundle {
+    public build(entry: string): IBuild {
         this.validateEntry(entry);
 
         const bundle = buildSync({
