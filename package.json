@@ -8,7 +8,7 @@
         "prepare": "npm run build",
         "test": "jest -t --config=jest.config.ts",
         "lint:fix": "eslint '**/*.{js,ts}' --fix",
-        "lint:check": "eslint '**/*.{js,ts}' --quiet"
+        "lint:check": "eslint ."
     },
     "devDependencies": {
         "@types/adm-zip": "^0.4.34",
