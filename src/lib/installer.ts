@@ -35,7 +35,7 @@ class Installer implements IInstaller {
     }
 
     private get isWin(): boolean {
-        const platform = process.platform;
+        const { platform } = process;
         return platform === 'win32';
     }
 

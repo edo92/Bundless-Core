@@ -78,7 +78,7 @@ class Directory implements IDirectory {
 
     public create(): IDirectory {
         const dirname = this.moduleName;
-        const outdir = this.opts.outdir;
+        const { outdir } = this.opts;
         this.location = path.join(outdir, dirname);
         return this;
     }

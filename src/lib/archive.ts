@@ -6,7 +6,7 @@ export interface IArchive {
     zipFile: string;
     writeFile(): void;
     removeZip(): void;
-    extract(path: string): any;
+    extract(path: string): void;
     archive(content: string | Buffer): void;
     addFile(content: string | Buffer): void;
 }
@@ -57,7 +57,7 @@ class Archive implements IArchive {
         this.zip.addFile(this.outFile, buff);
     }
 
-    public extract(targetPath: string) {
+    public extract(targetPath: string): void {
         return this.zip.extractAllTo(targetPath);
     }
 
