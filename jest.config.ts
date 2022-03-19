@@ -1,4 +1,4 @@
-const config = {
+module.exports = {
     clearMocks: true,
     moduleFileExtensions: ['js', 'ts'],
     roots: ['./test'],
@@ -13,5 +13,3 @@ const config = {
     },
     moduleDirectories: ['src', 'node_modules'],
 };
-
-export default config;

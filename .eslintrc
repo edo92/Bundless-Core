@@ -4,29 +4,24 @@
         "node": true,
         "jest": true
     },
-    "overrides": [
-        {
-            "files": ["**/*.test.js", "**/*.test.ts"],
-            "env": {
-                "jest": true
-            }
-        }
-    ],
     "extends": [
+        "airbnb-base",
+        "airbnb-typescript/base",
         "plugin:@typescript-eslint/recommended",
+        "plugin:eslint-comments/recommended",
         "plugin:jest/recommended",
         "prettier",
         "plugin:@typescript-eslint/recommended-requiring-type-checking"
     ],
     "parser": "@typescript-eslint/parser",
-    "plugins": ["@typescript-eslint", "jest", "import", "prettier"],
+    "parserOptions": {
+        "project": "./tsconfig.json"
+    },
+    "plugins": ["@typescript-eslint", "eslint-comments", "jest", "import", "prettier"],
     "rules": {
-        "semi": "error",
         "no-new": 0,
         "no-template-curly-in-string": "off",
-        "max-classes-per-file": ["error", 4],
-        "@typescript-eslint/no-unsafe-assignment": "off",
-        "@typescript-eslint/no-unsafe-call": "off",
+        "max-classes-per-file": ["error", 2],
         "@typescript-eslint/lines-between-class-members": "off",
         "max-len": ["error", { "code": 100 }],
         "class-methods-use-this": "off",
