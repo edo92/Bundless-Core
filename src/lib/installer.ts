@@ -43,7 +43,7 @@ class Installer implements IInstaller {
         return this.isWin ? Npm.win : Npm.os;
     }
 
-    constructor(private opts: InstallerOpts) {
+    constructor(private readonly opts: InstallerOpts) {
         if (!fs.existsSync(opts.entry)) {
             throw new Error('Entry doesn`t exist');
         }

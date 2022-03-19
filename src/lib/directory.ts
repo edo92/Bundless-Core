@@ -58,7 +58,7 @@ class Directory implements IDirectory {
         return `${prefix}-${dirname}`;
     }
 
-    constructor(private opts: DirectoryOpts) {
+    constructor(private readonly opts: DirectoryOpts) {
         if (!fs.existsSync(this.opts.entry)) {
             throw new Error('Entry doesn`t exist');
         }
