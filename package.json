@@ -3,6 +3,7 @@
     "main": "dist/index.js",
     "author": "edo1792",
     "name": "bundless-core",
+    "license": "MIT",
     "files": [
         "dist"
     ],
@@ -51,7 +52,7 @@
         "url": "https://github.com/edo92/Bundless-Core"
     },
     "publishConfig": {
-        "registry": "https://registry.npmjs.org/"
+        "registry": "https://npm.pkg.github.com"
     },
     "keywords": [
         "bundler",
