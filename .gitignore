@@ -2,4 +2,3 @@ dist
 DS_Store
 bundle.out
 node_modules
-package-lock.json
