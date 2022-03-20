@@ -1,8 +1,8 @@
 {
-    "name": "bundless",
-    "version": "1.0.1",
+    "version": "1.0.0",
     "main": "dist/index.js",
     "author": "Eduard Jacobs",
+    "name": "@edo92/bundless-core",
     "scripts": {
         "build": "tsc",
         "prepare": "npm run build",

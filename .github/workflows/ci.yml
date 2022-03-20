@@ -72,4 +72,6 @@ jobs:
 
       - name: Deploy
         run: |
-          echo deploy
+          npm publish
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
