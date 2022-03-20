@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "main": "dist/index.js",
-    "author": "Eduard Jacobs",
+    "author": "edo1792",
     "name": "bundless-core",
     "scripts": {
         "build": "tsc",
