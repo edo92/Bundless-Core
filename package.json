@@ -3,6 +3,9 @@
     "main": "dist/index.js",
     "author": "edo1792",
     "name": "bundless-core",
+    "files": [
+        "dist"
+    ],
     "scripts": {
         "build": "tsc",
         "prepare": "npm run build",
@@ -46,6 +49,9 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/edo92/Bundless-Core"
+    },
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/"
     },
     "keywords": [
         "bundler",

@@ -54,14 +54,9 @@ jobs:
       - name: Test
         run: |
           npm run test
-        env:
-          CI: true
-          EXCHANGE_OMS_ID: 1
-          ISOLATE: true
 
   Deploy:
     runs-on: ubuntu-latest
-    needs: [Lint, Test]
 
     steps:
       - name: Cache Modules
@@ -78,13 +73,18 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: "16"
-          registry-url: "https://registry.npmjs.org/bundless-core"
+          registry-url: "https://registry.npmjs.org"
+          scope: "@edo1792"
 
       - name: Install
         run: |
           npm install
 
-      - name: Deploy
+      - name: Build
+        run: |
+          npm run build
+
+      - name: Publish
         run: |
           npm publish --access public
         env:
