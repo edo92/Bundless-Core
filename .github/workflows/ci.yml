@@ -36,12 +36,21 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Cache Modules
+        id: cache-node-modules
+        uses: actions/cache@v2
+        with:
+          path: "**/node_modules"
+          key: node-modules-cdk${{ hashFiles('package-lock.json') }}
+
       - name: Install
         run: |
           npm install
+
       - name: Build
         run: |
           npm run build
+
       - name: Test
         run: |
           npm run test
@@ -61,6 +70,10 @@ jobs:
         with:
           path: "**/node_modules"
           key: node-modules-cdk${{ hashFiles('package-lock.json') }}
+
+      - name: Install
+        run: |
+          npm install
 
       - name: Checkout
         uses: actions/checkout@v2
