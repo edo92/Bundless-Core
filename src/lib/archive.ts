@@ -12,9 +12,7 @@ export interface IArchive {
 }
 
 export interface ArchiveOpts {
-    wrap?: boolean;
     outdir: string;
-    wrap?: boolean;
     zipFilename: string;
 }
 
@@ -31,9 +29,8 @@ class Archive implements IArchive {
     }
 
     private get outdir(): string {
-        const file = this.opts.zipFilename;
-        if (!this.opts.wrap) return 'index.js';
-        return path.join(file, 'index.js');
+        const { outdir, zipFilename } = this.opts;
+        return path.join(outdir, zipFilename);
     }
 
     constructor(private opts: ArchiveOpts) {
