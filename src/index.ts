@@ -1,6 +1,6 @@
 import path from 'path';
 import Archive from './lib/archive';
-import Builder, { IBuild } from './lib/build';
+import Builder, { BuilderSpecs, IBuild } from './lib/build';
 import Directory, { IDirectory } from './lib/directory';
 import Installer from './lib/installer';
 
@@ -37,6 +37,12 @@ export interface BundlerOpts {
      * out directory name where bundle stored
      */
     outdir?: string;
+
+    /**
+     *
+     * builder options only for builder lib
+     */
+    readonly builder?: BuilderSpecs;
 }
 
 enum Defaults {
@@ -85,6 +91,7 @@ export class Bundler implements IBundler {
     private build(): IBuild {
         return new Builder({
             outdir: this.outdir,
+            ...this.opts.builder,
         }).build(this.tempDirectory.location);
     }
 
