@@ -40,6 +40,12 @@ export interface BundlerOpts {
 
     /**
      *
+     * wrap output zip file in directory with same name
+     */
+    wrap?: boolean;
+
+    /**
+     *
      * builder options only for builder lib
      */
     readonly builder?: BuilderSpecs;

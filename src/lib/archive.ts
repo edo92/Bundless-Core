@@ -12,6 +12,7 @@ export interface IArchive {
 }
 
 export interface ArchiveOpts {
+    wrap?: boolean;
     outdir: string;
     zipFilename: string;
 }
@@ -25,6 +26,7 @@ class Archive implements IArchive {
 
     private get outFile(): string {
         const file = this.opts.zipFilename;
+        if (this.opts.wrap) return 'index.js';
         return path.join(file, 'index.js');
     }
 
