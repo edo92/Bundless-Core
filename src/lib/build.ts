@@ -6,15 +6,59 @@ export interface IBuild {
     bundle: string;
 }
 
-export interface BuilderOpts {
-    outdir?: string;
+export interface BuilderSpecs {
+    /**
+     *
+     * @default {true}
+     * To bundle a file means to inline any imported dependencies into the file itself.
+     */
     bundle?: boolean;
+
+    /**
+     *
+     * @default {true}
+     */
     minify?: boolean;
+
+    /**
+     *
+     * External dependencies which will be provided by runtime
+     */
     external?: string[];
+
+    /**
+     *
+     * @default {cjs}
+     * output format
+     */
     format?: esTypes.Format;
+
+    /**
+     *
+     * @default {node14}
+     * Platform type such as node, etc..
+     */
     platform?: esTypes.Platform;
-    logLevel?: esTypes.LogLevel;
+
+    /**
+     *
+     * Target nodejs type
+     */
     target?: 'node12' | 'node14' | 'esndext';
+}
+
+export interface BuilderOpts extends BuilderSpecs {
+    /**
+     *
+     * Directory where builder will place output file
+     */
+    outdir?: string;
+
+    /**
+     *
+     * Specify log level such as warning, error, etc..
+     */
+    logLevel?: esTypes.LogLevel;
 }
 
 export interface IBuilder {

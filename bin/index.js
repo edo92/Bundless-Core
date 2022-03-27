@@ -1,6 +1,5 @@
 #!/usr/bin/env node
-const { Cli } = require('../dist/cli');
-const { Bundler } = require('../dist/index.js');
+const { Bundler, Cli } = require('../dist');
 
 (async function () {
     const cli = new Cli();
