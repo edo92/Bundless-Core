@@ -14,6 +14,7 @@ export interface IArchive {
 export interface ArchiveOpts {
     wrap?: boolean;
     outdir: string;
+    wrap?: boolean;
     zipFilename: string;
 }
 
