@@ -1,8 +1,9 @@
 import path from 'path';
+import * as esTypes from 'esbuild';
 import Archive from './lib/archive';
+import Installer from './lib/installer';
 import Builder, { IBuild } from './lib/build';
 import Directory, { IDirectory } from './lib/directory';
-import Installer from './lib/installer';
 
 export interface IBundler {
     /**
@@ -19,24 +20,77 @@ export interface IBundler {
     bundle(): void;
 }
 
+export interface BuilderSpecs {
+    /**
+     *
+     * @default {true}
+     * To bundle a file means to inline any imported dependencies into the file itself.
+     */
+    bundle?: boolean;
+
+    /**
+     *
+     * @default {true}
+     */
+    minify?: boolean;
+
+    /**
+     *
+     * External dependencies which will be provided by runtime
+     */
+    external?: string[];
+
+    /**
+     *
+     * @default {cjs}
+     * output format
+     */
+    format?: esTypes.Format;
+
+    /**
+     *
+     * @default {node14}
+     * Platform type such as node, etc..
+     */
+    platform?: esTypes.Platform;
+
+    /**
+     *
+     * Target nodejs type
+     */
+    target?: 'node12' | 'node14' | 'esndext';
+}
+
 export interface BundlerOpts {
     /**
      *
      * bundle name that produce <name.zip>
      */
-    name?: string;
+    readonly name?: string;
 
     /**
      *
      * entry directory to source code
      */
-    entry: string;
+    readonly entry: string;
 
     /**
      *
      * out directory name where bundle stored
      */
-    outdir?: string;
+    readonly outdir?: string;
+
+    /**
+     *
+     *
+     */
+    readonly wrap?: boolean;
+
+    /**
+     *
+     * builder options only for builder lib
+     */
+    readonly builder?: BuilderSpecs;
 }
 
 enum Defaults {
@@ -85,12 +139,14 @@ export class Bundler implements IBundler {
     private build(): IBuild {
         return new Builder({
             outdir: this.outdir,
+            ...this.opts.builder,
         }).build(this.tempDirectory.location);
     }
 
     private archive(bundle: string): void {
         new Archive({
             outdir: this.outdir,
+            wrap: this.opts.wrap,
             zipFilename: this.outfile,
         }).archive(bundle);
     }
