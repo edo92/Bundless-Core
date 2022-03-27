@@ -87,4 +87,7 @@ describe('Archive Module', () => {
             expect(fs.existsSync(Mock.modulePath)).toBe(false);
         });
     });
+
+    // TODO: test wrap option which wraps in directory if true
+    // describe("test wrap option",()=>{})
 });
