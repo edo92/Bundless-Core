@@ -1,14 +1,13 @@
 import path from 'path';
 import Archive from './lib/archive';
-import Builder, { BuilderSpecs, IBuild } from './lib/build';
-import Directory, { IDirectory } from './lib/directory';
 import Installer from './lib/installer';
+import Directory, { IDirectory } from './lib/directory';
+import Builder, { BuilderSpecs, IBuild } from './lib/build';
 
 export interface IBundler {
     /**
      *
-     * absolute path
-     * location where bundle is stored
+     * absolute path, location where bundle is stored
      */
     readonly location: string;
 
@@ -104,6 +103,7 @@ export class Bundler implements IBundler {
     private archive(bundle: string): void {
         new Archive({
             outdir: this.outdir,
+            wrap: this.opts.wrap,
             zipFilename: this.outfile,
         }).archive(bundle);
     }
