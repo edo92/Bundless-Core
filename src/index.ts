@@ -1,4 +1,5 @@
 import path from 'path';
+import JestTest from './lib/test';
 import Archive from './lib/archive';
 import Installer from './lib/installer';
 import Directory, { IDirectory } from './lib/directory';
@@ -53,6 +54,7 @@ export interface BundlerOpts {
 enum Defaults {
     outfile = 'archive',
     outdir = 'bundle.out',
+    jestConfig = 'src/config/jest.config.js',
 }
 
 export class Bundler implements IBundler {
@@ -71,6 +73,10 @@ export class Bundler implements IBundler {
         return this.opts.entry;
     }
 
+    private get testConfig(): string {
+        return path.resolve(Defaults.jestConfig);
+    }
+
     public get location(): string {
         const outfile = `${this.outfile}.zip`;
         return path.join(this.outdir, outfile);
@@ -81,7 +87,12 @@ export class Bundler implements IBundler {
     }
 
     public bundle(): void {
+        this.testing();
         this.install();
+        this.process();
+    }
+
+    private process() {
         const build = this.build();
         this.archive(build.bundle);
         this.tempDirectory.delete();
@@ -91,6 +102,13 @@ export class Bundler implements IBundler {
         new Installer({
             entry: this.tempDirectory.location,
         }).install();
+    }
+
+    private testing(): void {
+        new JestTest({
+            configPath: this.testConfig,
+            entry: this.opts.entry,
+        }).test();
     }
 
     private build(): IBuild {
