@@ -103,7 +103,7 @@ export class Bundler implements IBundler {
     private archive(bundle: string): void {
         new Archive({
             outdir: this.outdir,
-            wrap: this.opts.wrap,
+            wrap: !this.opts.wrap,
             zipFilename: this.outfile,
         }).archive(bundle);
     }
