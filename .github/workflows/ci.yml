@@ -18,7 +18,7 @@ jobs:
       - name: Lint
         run: |
           npm run lint:check
-  Test:
+  Test: 
     runs-on: ${{ matrix.os }}
     needs: [Lint]
     strategy:
