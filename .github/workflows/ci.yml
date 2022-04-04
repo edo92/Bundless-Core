@@ -1,4 +1,6 @@
-on: [pull_request]
+on:
+  pull_request:
+    types: [opened]
 
 jobs:
   Lint:
@@ -18,7 +20,7 @@ jobs:
       - name: Lint
         run: |
           npm run lint:check
-  Test: 
+  Test:
     runs-on: ${{ matrix.os }}
     needs: [Lint]
     strategy:
