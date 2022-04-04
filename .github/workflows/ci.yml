@@ -1,11 +1,15 @@
 on:
   pull_request:
+    types:
+      - opened
+      - closed
     branches:
-      - master
+      - main
 
 jobs:
   Lint:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == false
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -21,8 +25,10 @@ jobs:
       - name: Lint
         run: |
           npm run lint:check
+
   Test:
     runs-on: ${{ matrix.os }}
+    if: github.event.pull_request.merged == false
     needs: [Lint]
     strategy:
       fail-fast: false
@@ -58,6 +64,7 @@ jobs:
 
   Deploy:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
     needs: ["Lint", "Test"]
     steps:
       - uses: actions/checkout@v2
